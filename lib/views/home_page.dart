@@ -5,14 +5,11 @@ import 'package:news_app/bloc/data_event.dart';
 import 'package:news_app/bloc/data_state.dart';
 import 'package:news_app/models/data_model.dart';
 
-
-
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     DoctorsInitialState state = DoctorsInitialState();
 
     return BlocProvider(
@@ -30,8 +27,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   @override
   void initState() {
     super.initState();
@@ -39,12 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
     newsBloc!.add(FetchPostEvent());
   }
 
-
   DoctorsBloc? newsBloc;
 
-  Widget _savedList(List<DoctorsModel> lists) {
+  Widget _savedList(List<Result> lists) {
     return ListView.builder(
-        itemCount: lists == null ? 0 : lists.length,
+        itemCount: lists.length,
         itemBuilder: (context, index) {
           return Card(
             margin: const EdgeInsets.all(15),
@@ -64,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            lists[index].result![index].firstName.toString(),
+                            lists[index].firstName,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 15.0,
@@ -160,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
             } else if (state is DoctorsLoadingState) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is DoctorsLoadedState) {
-              return _savedList(state.list);
+              return _savedList(state.doctorsModel.result);
             } else if (state is DoctorsErrorState) {
               return buildErrorUi("Error");
             } else {

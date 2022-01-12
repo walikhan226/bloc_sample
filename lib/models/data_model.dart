@@ -1,167 +1,117 @@
-// To parse this JSON data, do
-//
-//     final doctorsModel = doctorsModelFromJson(jsonString);
-
-import 'dart:convert';
-
-DoctorsModel doctorsModelFromJson(String str) => DoctorsModel.fromJson(json.decode(str));
-
-String doctorsModelToJson(DoctorsModel data) => json.encode(data.toJson());
-
 class DoctorsModel {
   DoctorsModel({
-    this.status,
-    this.message,
-    this.result,
+    required this.status,
+    required this.message,
+    required this.result,
   });
+  late final bool status;
+  late final String message;
+  late final List<Result> result;
 
-  bool? status;
-  String? message;
-  List<Result>? result;
+  DoctorsModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    result = List.from(json['result']).map((e) => Result.fromJson(e)).toList();
+  }
 
-  factory DoctorsModel.fromJson(Map<String, dynamic> json) => DoctorsModel(
-    status: json["status"],
-    message: json["message"],
-    result: List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "result": List<dynamic>.from(result!.map((x) => x.toJson())),
-  };
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['status'] = status;
+    _data['message'] = message;
+    _data['result'] = result.map((e) => e.toJson()).toList();
+    return _data;
+  }
 }
 
 class Result {
   Result({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.latitude,
-    this.longtitude,
-    this.address,
-    this.ratingScore,
-    this.image,
-    this.availabilityStatus,
-    this.doctorCountry,
-    this.phoneNumber,
-    this.experience,
-    this.price,
-    this.degree,
-    this.recommended,
-    this.isFree,
-    this.createdAt,
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.latitude,
+    required this.longtitude,
+    required this.address,
+    required this.ratingScore,
+    required this.image,
+    required this.availabilityStatus,
+    required this.doctorCountry,
+    required this.phoneNumber,
+    required this.experience,
+    required this.price,
+    required this.degree,
+    required this.recommended,
+    required this.isFree,
+    required this.createdAt,
     this.updatedAt,
     this.deletedAt,
   });
+  late final int id;
+  late final String firstName;
+  late final String lastName;
+  late final String email;
+  late final String latitude;
+  late final String longtitude;
+  late final String address;
+  late final ratingScore;
+  late final String image;
+  late final String availabilityStatus;
+  late final String doctorCountry;
+  late final String phoneNumber;
+  late final String experience;
+  late final String price;
+  late final String degree;
+  late final int recommended;
+  late final int isFree;
+  late final String createdAt;
+  late final String? updatedAt;
+  late final Null deletedAt;
 
-  int? id;
-  String? firstName;
-  LastName? lastName;
-  String? email;
-  String? latitude;
-  String? longtitude;
-  String? address;
-  double? ratingScore;
-  String? image;
-  AvailabilityStatus? availabilityStatus;
-  DoctorCountry? doctorCountry;
-  String? phoneNumber;
-  String? experience;
-  String? price;
-  String? degree;
-  int? recommended;
-  int? isFree;
-  dynamic createdAt;
-  dynamic updatedAt;
-  dynamic deletedAt;
+  Result.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+    email = json['email'];
+    latitude = json['latitude'];
+    longtitude = json['longtitude'];
+    address = json['address'];
+    ratingScore = json['rating_score'];
+    image = json['image'];
+    availabilityStatus = json['availability_status'];
+    doctorCountry = json['doctor_country'];
+    phoneNumber = json['phone_number'];
+    experience = json['experience'];
+    price = json['price'];
+    degree = json['degree'];
+    recommended = json['recommended'];
+    isFree = json['is_free'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+  }
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
-    id: json["id"],
-    firstName: json["first_name"],
-    lastName: lastNameValues.map[json["last_name"]],
-    email: json["email"],
-    latitude: json["latitude"],
-    longtitude: json["longtitude"],
-    address: json["address"],
-    ratingScore: json["rating_score"].toDouble(),
-    image: json["image"],
-    availabilityStatus: availabilityStatusValues.map[json["availability_status"]],
-    doctorCountry: doctorCountryValues.map[json["doctor_country"]],
-    phoneNumber: json["phone_number"],
-    experience: json["experience"],
-    price: json["price"],
-    degree: json["degree"],
-    recommended: json["recommended"],
-    isFree: json["is_free"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
-    deletedAt: json["deleted_at"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "first_name": firstName,
-    "last_name": lastNameValues.reverse![lastName],
-    "email": email,
-    "latitude": latitude,
-    "longtitude": longtitude,
-    "address": address,
-    "rating_score": ratingScore,
-    "image": image,
-    "availability_status": availabilityStatusValues.reverse![availabilityStatus],
-    "doctor_country": doctorCountryValues.reverse![doctorCountry],
-    "phone_number": phoneNumber,
-    "experience": experience,
-    "price": price,
-    "degree": degree,
-    "recommended": recommended,
-    "is_free": isFree,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
-    "deleted_at": deletedAt,
-  };
-}
-
-enum AvailabilityStatus { OFFLINE, ONLINE }
-
-final availabilityStatusValues = EnumValues({
-  "offline": AvailabilityStatus.OFFLINE,
-  "online": AvailabilityStatus.ONLINE
-});
-
-enum AtedAt { THE_0000011130_T00_0000000000_Z }
-
-final atedAtValues = EnumValues({
-  "-000001-11-30T00:00:00.000000Z": AtedAt.THE_0000011130_T00_0000000000_Z
-});
-
-enum DoctorCountry { PAKISTAN }
-
-final doctorCountryValues = EnumValues({
-  "Pakistan": DoctorCountry.PAKISTAN
-});
-
-enum LastName { EMPTY, TEST, SHAJI, DOCTOR }
-
-final lastNameValues = EnumValues({
-  "doctor": LastName.DOCTOR,
-  "": LastName.EMPTY,
-  "Shaji": LastName.SHAJI,
-  "test": LastName.TEST
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String>? reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String>? get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['first_name'] = firstName;
+    _data['last_name'] = lastName;
+    _data['email'] = email;
+    _data['latitude'] = latitude;
+    _data['longtitude'] = longtitude;
+    _data['address'] = address;
+    _data['rating_score'] = ratingScore;
+    _data['image'] = image;
+    _data['availability_status'] = availabilityStatus;
+    _data['doctor_country'] = doctorCountry;
+    _data['phone_number'] = phoneNumber;
+    _data['experience'] = experience;
+    _data['price'] = price;
+    _data['degree'] = degree;
+    _data['recommended'] = recommended;
+    _data['is_free'] = isFree;
+    _data['created_at'] = createdAt;
+    _data['updated_at'] = updatedAt;
+    _data['deleted_at'] = deletedAt;
+    return _data;
   }
 }

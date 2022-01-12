@@ -16,10 +16,10 @@ class DoctorsBloc extends Bloc<DoctorsEvent, DoctorsStates> {
     if (event is FetchPostEvent) {
       yield DoctorsLoadingState();
       try {
-        List<DoctorsModel> posts = await repository.getDoctors();
+        var posts = await repository.getDoctors();
         print("doctors posts");
 
-        yield DoctorsLoadedState(list: posts);
+        yield DoctorsLoadedState(doctorsModel: posts);
       } catch (e) {
         yield DoctorsErrorState(message: e.toString());
       }
